@@ -1,0 +1,17 @@
+name: Build UF2
+
+on: [push, workflow_dispatch]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y gcc-arm-none-eabi libnewlib-arm-none-eabi
+      - run: git clone --recursive https://github.com/raspberrypi/pico-sdk.git ~/pico-sdk
+      - run: mkdir build && cd build && cmake .. -DPICO_SDK_PATH=~/pico-sdk && make -j$(nproc)
+      - uses: actions/upload-artifact@v4
+        with:
+          name: osciloscopio
+          path: build/*.uf2
+          
