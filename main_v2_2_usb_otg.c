@@ -644,4 +644,8 @@ static void draw_xy_mode(float *ch1, float *ch2) {
         int x = OLED_WIDTH / 2 + (int)((ch1[i] / v_max_display) * (OLED_WIDTH / 2));
         int y = OLED_HEIGHT / 2 - (int)((ch2[i] / v_max_display) * (OLED_HEIGHT / 2));
 
-        if (x >= 0 && 
+        if (x >= 0 && x < OLED_WIDTH && y >= 0 && y < OLED_HEIGHT) {
+            oled_pixel(x, y, true);
+        }
+    }
+}
